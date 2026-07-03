@@ -8,9 +8,24 @@ const PORT = 3000;
 app.use(cors());
 app.use(express.json());
 
-// GET - Listar todos os jogos
+// GET - Listar todos os jogos (com busca e filtro opcionais)
 app.get('/api/jogos', (req, res) => {
-  db.all('SELECT * FROM jogos ORDER BY id DESC', [], (err, rows) => {
+  const { busca, genero } = req.query;
+  let sql = 'SELECT * FROM jogos WHERE 1=1';
+  const params = [];
+
+  if (busca) {
+    sql += ' AND nome LIKE ?';
+    params.push(`%${busca}%`);
+  }
+  if (genero) {
+    sql += ' AND genero = ?';
+    params.push(genero);
+  }
+
+  sql += ' ORDER BY id DESC';
+
+  db.all(sql, params, (err, rows) => {
     if (err) {
       return res.status(500).json({ erro: err.message });
     }
@@ -34,39 +49,40 @@ app.get('/api/jogos/:id', (req, res) => {
 
 // POST - Cadastrar novo jogo
 app.post('/api/jogos', (req, res) => {
-  const { nome, genero, plataforma, ano, nota } = req.body;
+  const { nome, genero, plataforma, ano, nota, descricao, imagem_url } = req.body;
 
   if (!nome || !genero || !plataforma || !ano) {
     return res.status(400).json({ erro: 'Campos obrigatórios: nome, genero, plataforma, ano' });
   }
 
-  const sql = 'INSERT INTO jogos (nome, genero, plataforma, ano, nota) VALUES (?, ?, ?, ?, ?)';
-  db.run(sql, [nome, genero, plataforma, ano, nota || null], function (err) {
+  const sql = `INSERT INTO jogos (nome, genero, plataforma, ano, nota, descricao, imagem_url)
+               VALUES (?, ?, ?, ?, ?, ?, ?)`;
+  db.run(sql, [nome, genero, plataforma, ano, nota || null, descricao || null, imagem_url || null], function (err) {
     if (err) {
       return res.status(500).json({ erro: err.message });
     }
-    res.status(201).json({ id: this.lastID, nome, genero, plataforma, ano, nota });
+    res.status(201).json({ id: this.lastID, nome, genero, plataforma, ano, nota, descricao, imagem_url });
   });
 });
 
 // PUT - Atualizar jogo existente
 app.put('/api/jogos/:id', (req, res) => {
   const { id } = req.params;
-  const { nome, genero, plataforma, ano, nota } = req.body;
+  const { nome, genero, plataforma, ano, nota, descricao, imagem_url } = req.body;
 
   if (!nome || !genero || !plataforma || !ano) {
     return res.status(400).json({ erro: 'Campos obrigatórios: nome, genero, plataforma, ano' });
   }
 
-  const sql = `UPDATE jogos SET nome = ?, genero = ?, plataforma = ?, ano = ?, nota = ? WHERE id = ?`;
-  db.run(sql, [nome, genero, plataforma, ano, nota || null, id], function (err) {
+  const sql = `UPDATE jogos SET nome = ?, genero = ?, plataforma = ?, ano = ?, nota = ?, descricao = ?, imagem_url = ? WHERE id = ?`;
+  db.run(sql, [nome, genero, plataforma, ano, nota || null, descricao || null, imagem_url || null, id], function (err) {
     if (err) {
       return res.status(500).json({ erro: err.message });
     }
     if (this.changes === 0) {
       return res.status(404).json({ erro: 'Jogo não encontrado' });
     }
-    res.json({ id: Number(id), nome, genero, plataforma, ano, nota });
+    res.json({ id: Number(id), nome, genero, plataforma, ano, nota, descricao, imagem_url });
   });
 });
 

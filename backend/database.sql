@@ -7,11 +7,13 @@ CREATE TABLE IF NOT EXISTS jogos (
     genero TEXT NOT NULL,
     plataforma TEXT NOT NULL,
     ano INTEGER NOT NULL,
-    nota REAL
+    nota REAL,
+    descricao TEXT,
+    imagem_url TEXT
 );
 
-INSERT INTO jogos (nome, genero, plataforma, ano, nota) VALUES
-('The Legend of Zelda: Breath of the Wild', 'Aventura', 'Nintendo Switch', 2017, 9.7),
-('God of War', 'Ação', 'PlayStation 4', 2018, 9.6),
-('Elden Ring', 'RPG', 'PC', 2022, 9.5),
-('Stardew Valley', 'Simulação', 'PC', 2016, 9.0);
+INSERT INTO jogos (nome, genero, plataforma, ano, nota, descricao, imagem_url) VALUES
+('The Legend of Zelda: Breath of the Wild', 'Aventura', 'Nintendo Switch', 2017, 9.7, 'Explore o vasto reino de Hyrule em um mundo aberto repleto de mistérios e desafios.', 'https://upload.wikimedia.org/wikipedia/en/c/c6/The_Legend_of_Zelda_Breath_of_the_Wild.jpg'),
+('God of War', 'Ação', 'PlayStation 4', 2018, 9.6, 'Kratos e seu filho Atreus embarcam em uma jornada pela mitologia nórdica.', 'https://upload.wikimedia.org/wikipedia/en/a/a7/God_of_War_4_cover.jpg'),
+('Elden Ring', 'RPG', 'PC', 2022, 9.5, 'Um RPG de ação em mundo aberto criado por FromSoftware e George R. R. Martin.', 'https://upload.wikimedia.org/wikipedia/en/b/b9/Elden_Ring_Box_art.jpg'),
+('Stardew Valley', 'Simulação', 'PC', 2016, 9.0, 'Assuma a fazenda da sua família e construa uma nova vida no campo.', 'https://upload.wikimedia.org/wikipedia/en/f/fd/Logo_of_Stardew_Valley.png');

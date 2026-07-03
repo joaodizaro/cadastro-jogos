@@ -17,7 +17,9 @@ db.run(`
     genero TEXT NOT NULL,
     plataforma TEXT NOT NULL,
     ano INTEGER NOT NULL,
-    nota REAL
+    nota REAL,
+    descricao TEXT,
+    imagem_url TEXT
   )
 `);
 

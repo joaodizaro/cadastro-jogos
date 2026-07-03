@@ -11,12 +11,20 @@ Sistema web CRUD completo desenvolvido para a disciplina de Programação II
 
 ## Funcionalidades
 
-- Cadastro de jogos (nome, gênero, plataforma, ano, nota)
-- Listagem de todos os jogos cadastrados
-- Consulta individual de um jogo
-- Edição de dados de um jogo
-- Exclusão de jogos
-- Interface responsiva
+- Listagem de jogos em cards, com imagem de capa, gênero, plataforma, ano e nota
+- Busca de jogos por nome (em tempo real)
+- Filtro de jogos por gênero
+- Cadastro de novo jogo (página própria)
+- Edição de jogo existente (reaproveitando o mesmo formulário)
+- Página de detalhes de cada jogo (descrição, nota, capa)
+- Exclusão de jogos (na listagem e na página de detalhes)
+- Interface responsiva (funciona em celular e desktop)
+
+## Páginas do sistema
+
+- `index.html` — Lista de jogos com busca e filtro
+- `cadastro.html` — Formulário de cadastro/edição de jogo
+- `detalhes.html` — Página de detalhes de um jogo específico
 
 ## Como executar o projeto
 
@@ -25,8 +33,13 @@ Sistema web CRUD completo desenvolvido para a disciplina de Programação II
 
 ### 2. Configuração do banco de dados
 O banco de dados SQLite é criado automaticamente ao iniciar o servidor
-(arquivo `backend/jogos.db`). Também é fornecido o script `backend/database.sql`
-que documenta e permite recriar a estrutura e os dados iniciais manualmente.
+(arquivo `backend/jogos.db`). O script `backend/database.sql` documenta
+a estrutura e os dados iniciais.
+
+Para popular o banco de dados com os dados de exemplo, rode (dentro da pasta `backend`):
+```bash
+node seed.js
+```
 
 ### 3. Executando o Back-end
 ```bash
@@ -37,8 +50,13 @@ npm start
 O servidor estará disponível em: `http://localhost:3000`
 
 ### 4. Executando o Front-end
-Basta abrir o arquivo `frontend/index.html` diretamente no navegador
-(ou usar a extensão "Live Server" do VS Code).
+Abra o arquivo `frontend/index.html` diretamente no navegador, ou use um
+servidor local (recomendado), por exemplo:
+```bash
+cd frontend
+npx http-server -p 5500
+```
+E acesse `http://127.0.0.1:5500` no navegador.
 
 > Importante: o back-end precisa estar rodando para o front-end funcionar.
 
@@ -46,10 +64,10 @@ Basta abrir o arquivo `frontend/index.html` diretamente no navegador
 
 | Método | Rota              | Finalidade                     | Exemplo de corpo (JSON)                                              |
 |--------|--------------------|---------------------------------|------------------------------------------------------------------------|
-| GET    | /api/jogos         | Lista todos os jogos            | -                                                                       |
+| GET    | /api/jogos         | Lista todos os jogos (aceita `?busca=` e `?genero=`) | -                                     |
 | GET    | /api/jogos/:id     | Busca um jogo específico        | -                                                                       |
-| POST   | /api/jogos         | Cadastra um novo jogo           | `{ "nome": "Elden Ring", "genero": "RPG", "plataforma": "PC", "ano": 2022, "nota": 9.5 }` |
-| PUT    | /api/jogos/:id     | Atualiza um jogo existente      | `{ "nome": "Elden Ring", "genero": "RPG", "plataforma": "PS5", "ano": 2022, "nota": 9.5 }` |
+| POST   | /api/jogos         | Cadastra um novo jogo           | `{ "nome": "Elden Ring", "genero": "RPG", "plataforma": "PC", "ano": 2022, "nota": 9.5, "descricao": "...", "imagem_url": "..." }` |
+| PUT    | /api/jogos/:id     | Atualiza um jogo existente      | `{ "nome": "Elden Ring", "genero": "RPG", "plataforma": "PS5", "ano": 2022, "nota": 9.5, "descricao": "...", "imagem_url": "..." }` |
 | DELETE | /api/jogos/:id     | Exclui um jogo                  | -                                                                       |
 
 ### Exemplo de retorno (GET /api/jogos/1)
@@ -60,7 +78,9 @@ Basta abrir o arquivo `frontend/index.html` diretamente no navegador
   "genero": "RPG",
   "plataforma": "PC",
   "ano": 2022,
-  "nota": 9.5
+  "nota": 9.5,
+  "descricao": "Um RPG de ação em mundo aberto...",
+  "imagem_url": "https://exemplo.com/capa.jpg"
 }
 ```
 
