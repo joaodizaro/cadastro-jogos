@@ -11,6 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementById('detalhesContainer')) {
     iniciarPaginaDetalhes();
   }
+  if (document.getElementById('statsGrid')) {
+    iniciarPaginaDashboard();
+  }
 });
 
 /* ==================== PÁGINA: LISTA (index.html) ==================== */
@@ -251,4 +254,72 @@ async function excluirEIrParaLista(id) {
     alert(erro.message);
     console.error(erro);
   }
+}
+/* ==================== PÁGINA: DASHBOARD (dashboard.html) ==================== */
+
+async function iniciarPaginaDashboard() {
+  try {
+    const resposta = await fetch(API_URL);
+    const jogos = await resposta.json();
+
+    renderizarEstatisticas(jogos);
+    renderizarGeneros(jogos);
+  } catch (erro) {
+    console.error(erro);
+  }
+}
+
+function renderizarEstatisticas(jogos) {
+  const statsGrid = document.getElementById('statsGrid');
+
+  const total = jogos.length;
+  const notas = jogos.filter(j => j.nota != null).map(j => j.nota);
+  const mediaNota = notas.length ? (notas.reduce((a, b) => a + b, 0) / notas.length).toFixed(1) : '-';
+  const melhorJogo = jogos.reduce((melhor, atual) => {
+    if (!melhor) return atual;
+    return (atual.nota ?? 0) > (melhor.nota ?? 0) ? atual : melhor;
+  }, null);
+  const totalGeneros = new Set(jogos.map(j => j.genero)).size;
+
+  statsGrid.innerHTML = `
+    <div class="stat-card">
+      <div class="stat-valor">${total}</div>
+      <div class="stat-label">Jogos cadastrados</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-valor">${mediaNota}</div>
+      <div class="stat-label">Nota média</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-valor">${melhorJogo ? melhorJogo.nome : '-'}</div>
+      <div class="stat-label">Melhor avaliado ${melhorJogo && melhorJogo.nota ? `(⭐ ${melhorJogo.nota})` : ''}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-valor">${totalGeneros}</div>
+      <div class="stat-label">Gêneros diferentes</div>
+    </div>
+  `;
+}
+
+function renderizarGeneros(jogos) {
+  const container = document.getElementById('generoLista');
+  const contagem = {};
+
+  jogos.forEach(jogo => {
+    contagem[jogo.genero] = (contagem[jogo.genero] || 0) + 1;
+  });
+
+  const maxQtd = Math.max(...Object.values(contagem), 1);
+
+  container.innerHTML = Object.entries(contagem)
+    .sort((a, b) => b[1] - a[1])
+    .map(([genero, qtd]) => `
+      <div class="genero-item">
+        <div class="genero-nome">${genero}</div>
+        <div class="genero-barra-container">
+          <div class="genero-barra" style="width: ${(qtd / maxQtd) * 100}%"></div>
+        </div>
+        <div class="genero-qtd">${qtd}</div>
+      </div>
+    `).join('');
 }

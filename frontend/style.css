@@ -6,20 +6,20 @@
 }
 
 :root {
-  --bg-principal: #14151f;
-  --bg-secundario: #1c1e2b;
-  --bg-card: #21232f;
-  --texto-principal: #f0f0f5;
-  --texto-secundario: #9a9cb3;
-  --destaque: #8b5cf6;
-  --destaque-hover: #7c3aed;
+  --bg-principal: #12161c;
+  --bg-secundario: #1a1f28;
+  --bg-card: #1e242e;
+  --texto-principal: #e8eaed;
+  --texto-secundario: #8a94a3;
+  --destaque: #14b8a6;
+  --destaque-hover: #0d9488;
   --sucesso: #22c55e;
   --sucesso-hover: #16a34a;
   --perigo: #ef4444;
   --perigo-hover: #dc2626;
   --info: #3b82f6;
   --info-hover: #2563eb;
-  --borda: #2c2f42;
+  --borda: #262c37;
 }
 
 body {
@@ -54,10 +54,7 @@ body {
 }
 
 .sidebar-logo span {
-  background: linear-gradient(90deg, var(--destaque), #ec4899);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--destaque);
 }
 
 .sidebar nav {
@@ -439,4 +436,97 @@ main {
     width: 100%;
     height: 220px;
   }
+}
+/* Dashboard - lista de gêneros */
+.dashboard-secao {
+  background: var(--bg-card);
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  padding: 22px;
+}
+
+.dashboard-secao h2 {
+  margin-bottom: 18px;
+  font-size: 18px;
+}
+
+.genero-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.genero-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.genero-nome {
+  width: 120px;
+  font-size: 14px;
+  color: var(--texto-secundario);
+  flex-shrink: 0;
+}
+
+.genero-barra-container {
+  flex: 1;
+  background-color: var(--bg-secundario);
+  border-radius: 6px;
+  height: 12px;
+  overflow: hidden;
+}
+
+.genero-barra {
+  height: 100%;
+  background-color: var(--destaque);
+  border-radius: 6px;
+}
+
+.genero-qtd {
+  width: 30px;
+  text-align: right;
+  font-size: 13px;
+  color: var(--texto-secundario);
+}
+
+/* Página Sobre */
+.sobre-container {
+  background: var(--bg-card);
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  padding: 28px;
+  max-width: 700px;
+}
+
+.sobre-container h2 {
+  margin-bottom: 14px;
+  font-size: 22px;
+}
+
+.sobre-container h3 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: var(--destaque);
+}
+
+.sobre-container p {
+  color: var(--texto-secundario);
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.sobre-container ul {
+  padding-left: 20px;
+  color: var(--texto-secundario);
+  line-height: 1.8;
+}
+
+.sobre-autor {
+  margin-top: 22px;
+  font-size: 13px;
+  font-style: italic;
+  border-top: 1px solid var(--borda);
+  padding-top: 16px;
 }

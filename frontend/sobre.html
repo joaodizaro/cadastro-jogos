@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Detalhes do Jogo</title>
+<title>Sobre - Cadastro de Jogos</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,7 +15,7 @@
       <span>GameVault</span>
     </div>
     <nav>
-      <a href="index.html" class="nav-link active">
+      <a href="index.html" class="nav-link">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
         Lista de Jogos
       </a>
@@ -27,7 +27,7 @@
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
         Dashboard
       </a>
-      <a href="sobre.html" class="nav-link">
+      <a href="sobre.html" class="nav-link active">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
         Sobre
       </a>
@@ -36,14 +36,38 @@
 
   <div class="conteudo">
     <header>
-      <h1>Detalhes do Jogo</h1>
+      <h1>Sobre o Sistema</h1>
     </header>
 
     <main>
-      <a href="index.html" class="link-voltar">&larr; Voltar para a lista</a>
+      <section class="sobre-container">
+        <h2>GameVault</h2>
+        <p>
+          O GameVault é um sistema de cadastro de jogos de video game desenvolvido
+          como projeto avaliativo da disciplina de Programação II, do curso de
+          Sistemas de Informação (UEMG - Unidade Passos).
+        </p>
+        <p>
+          O sistema permite cadastrar, listar, editar e excluir jogos, além de
+          consultar estatísticas gerais da coleção através do Dashboard.
+        </p>
 
-      <section id="detalhesContainer" class="detalhes-container">
-        <!-- conteúdo gerado via JS -->
+        <h3>Tecnologias utilizadas</h3>
+        <ul>
+          <li>Front-end: HTML, CSS e JavaScript puro</li>
+          <li>Back-end: Node.js com Express</li>
+          <li>Banco de Dados: SQLite</li>
+        </ul>
+
+        <h3>Funcionalidades</h3>
+        <ul>
+          <li>Cadastro, edição e exclusão de jogos</li>
+          <li>Listagem com busca e filtro por gênero</li>
+          <li>Página de detalhes de cada jogo</li>
+          <li>Dashboard com estatísticas da coleção</li>
+        </ul>
+
+        <p class="sobre-autor">Trabalho individual desenvolvido para fins acadêmicos.</p>
       </section>
     </main>
   </div>
