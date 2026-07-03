@@ -8,44 +8,57 @@
 </head>
 <body>
 
-<header>
-  <h1>🎮 Cadastro de Jogos</h1>
-</header>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">🎮 <span>GameVault</span></div>
+    <nav>
+      <a href="index.html" class="nav-link">📋 Lista de Jogos</a>
+      <a href="cadastro.html" class="nav-link active">➕ Novo Jogo</a>
+      <a href="dashboard.html" class="nav-link">📊 Dashboard</a>
+      <a href="sobre.html" class="nav-link">ℹ️ Sobre</a>
+    </nav>
+  </aside>
 
-<main>
-  <section class="form-container">
-    <h2 id="tituloForm">Novo Jogo</h2>
-    <form id="formJogo">
-      <input type="hidden" id="jogoId">
+  <div class="conteudo">
+    <header>
+      <h1 id="tituloForm">Novo Jogo</h1>
+    </header>
 
-      <label for="nome">Nome *</label>
-      <input type="text" id="nome" required>
+    <main>
+      <section class="form-container">
+        <form id="formJogo">
+          <input type="hidden" id="jogoId">
 
-      <label for="genero">Gênero *</label>
-      <input type="text" id="genero" required>
+          <label for="nome">Nome *</label>
+          <input type="text" id="nome" required>
 
-      <label for="plataforma">Plataforma *</label>
-      <input type="text" id="plataforma" required>
+          <label for="genero">Gênero *</label>
+          <input type="text" id="genero" required>
 
-      <label for="ano">Ano de Lançamento *</label>
-      <input type="number" id="ano" required>
+          <label for="plataforma">Plataforma *</label>
+          <input type="text" id="plataforma" required>
 
-      <label for="nota">Nota (0 a 10)</label>
-      <input type="number" id="nota" step="0.1" min="0" max="10">
+          <label for="ano">Ano de Lançamento *</label>
+          <input type="number" id="ano" required>
 
-      <label for="descricao">Descrição</label>
-      <textarea id="descricao" rows="4"></textarea>
+          <label for="nota">Nota (0 a 10)</label>
+          <input type="number" id="nota" step="0.1" min="0" max="10">
 
-      <label for="imagem_url">URL da Imagem (capa)</label>
-      <input type="url" id="imagem_url" placeholder="https://exemplo.com/imagem.jpg">
+          <label for="descricao">Descrição</label>
+          <textarea id="descricao" rows="4"></textarea>
 
-      <div class="form-botoes">
-        <a href="index.html" class="btn btn-cancelar">Cancelar</a>
-        <button type="submit" class="btn btn-salvar">Salvar</button>
-      </div>
-    </form>
-  </section>
-</main>
+          <label for="imagem_url">URL da Imagem (capa)</label>
+          <input type="url" id="imagem_url" placeholder="https://exemplo.com/imagem.jpg">
+
+          <div class="form-botoes">
+            <a href="index.html" class="btn btn-cancelar">Cancelar</a>
+            <button type="submit" class="btn btn-salvar">Salvar</button>
+          </div>
+        </form>
+      </section>
+    </main>
+  </div>
+</div>
 
 <script src="script.js"></script>
 </body>

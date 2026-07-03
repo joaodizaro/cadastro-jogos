@@ -8,25 +8,39 @@
 </head>
 <body>
 
-<header>
-  <h1>🎮 Cadastro de Jogos</h1>
-</header>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">🎮 <span>GameVault</span></div>
+    <nav>
+      <a href="index.html" class="nav-link active">📋 Lista de Jogos</a>
+      <a href="cadastro.html" class="nav-link">➕ Novo Jogo</a>
+      <a href="dashboard.html" class="nav-link">📊 Dashboard</a>
+      <a href="sobre.html" class="nav-link">ℹ️ Sobre</a>
+    </nav>
+  </aside>
 
-<main>
-  <section class="filtros">
-    <input type="text" id="campoBusca" placeholder="Buscar por nome...">
-    <select id="filtroGenero">
-      <option value="">Todos os gêneros</option>
-    </select>
-    <a href="cadastro.html" class="btn btn-novo">+ Novo Jogo</a>
-  </section>
+  <div class="conteudo">
+    <header>
+      <h1>Lista de Jogos</h1>
+    </header>
 
-  <section id="listaJogos" class="grid-jogos">
-    <!-- cards gerados via JS -->
-  </section>
+    <main>
+      <section class="filtros">
+        <input type="text" id="campoBusca" placeholder="Buscar por nome...">
+        <select id="filtroGenero">
+          <option value="">Todos os gêneros</option>
+        </select>
+        <a href="cadastro.html" class="btn btn-novo">+ Novo Jogo</a>
+      </section>
 
-  <p id="mensagemVazia" style="display:none;">Nenhum jogo encontrado.</p>
-</main>
+      <section id="listaJogos" class="grid-jogos">
+        <!-- cards gerados via JS -->
+      </section>
+
+      <p id="mensagemVazia" style="display:none;">Nenhum jogo encontrado.</p>
+    </main>
+  </div>
+</div>
 
 <script src="script.js"></script>
 </body>

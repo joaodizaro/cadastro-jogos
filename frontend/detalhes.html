@@ -8,17 +8,31 @@
 </head>
 <body>
 
-<header>
-  <h1>🎮 Cadastro de Jogos</h1>
-</header>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">🎮 <span>GameVault</span></div>
+    <nav>
+      <a href="index.html" class="nav-link active">📋 Lista de Jogos</a>
+      <a href="cadastro.html" class="nav-link">➕ Novo Jogo</a>
+      <a href="dashboard.html" class="nav-link">📊 Dashboard</a>
+      <a href="sobre.html" class="nav-link">ℹ️ Sobre</a>
+    </nav>
+  </aside>
 
-<main>
-  <a href="index.html" class="link-voltar">&larr; Voltar para a lista</a>
+  <div class="conteudo">
+    <header>
+      <h1>Detalhes do Jogo</h1>
+    </header>
 
-  <section id="detalhesContainer" class="detalhes-container">
-    <!-- conteúdo gerado via JS -->
-  </section>
-</main>
+    <main>
+      <a href="index.html" class="link-voltar">&larr; Voltar para a lista</a>
+
+      <section id="detalhesContainer" class="detalhes-container">
+        <!-- conteúdo gerado via JS -->
+      </section>
+    </main>
+  </div>
+</div>
 
 <script src="script.js"></script>
 </body>
