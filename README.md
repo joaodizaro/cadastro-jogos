@@ -1,4 +1,4 @@
-# 🎮 Cadastro de Jogos de Video Game
+# 🎮 GameVault — Cadastro de Jogos de Video Game
 
 Sistema web CRUD completo desenvolvido para a disciplina de Programação II
 (Sistemas de Informação - UEMG Unidade Passos).
@@ -14,17 +14,24 @@ Sistema web CRUD completo desenvolvido para a disciplina de Programação II
 - Listagem de jogos em cards, com imagem de capa, gênero, plataforma, ano e nota
 - Busca de jogos por nome (em tempo real)
 - Filtro de jogos por gênero
-- Cadastro de novo jogo (página própria)
-- Edição de jogo existente (reaproveitando o mesmo formulário)
+- Cadastro de novo jogo, com validação de campos (front-end e back-end)
+- Edição de jogo existente
 - Página de detalhes de cada jogo (descrição, nota, capa)
 - Exclusão de jogos (na listagem e na página de detalhes)
-- Interface responsiva (funciona em celular e desktop)
+- Ranking dos jogos ordenados por nota
+- Dashboard com estatísticas gerais (total de jogos, nota média, melhor avaliado, jogos por gênero)
+- Interface responsiva, com menu lateral fixo no desktop e menu retrátil (hambúrguer) no mobile
+- Loading state ao carregar dados da API
+- Animações sutis de transição
 
 ## Páginas do sistema
 
 - `index.html` — Lista de jogos com busca e filtro
 - `cadastro.html` — Formulário de cadastro/edição de jogo
 - `detalhes.html` — Página de detalhes de um jogo específico
+- `ranking.html` — Ranking dos jogos por nota
+- `dashboard.html` — Estatísticas gerais da coleção
+- `sobre.html` — Informações sobre o sistema
 
 ## Como executar o projeto
 
@@ -69,6 +76,12 @@ E acesse `http://127.0.0.1:5500` no navegador.
 | POST   | /api/jogos         | Cadastra um novo jogo           | `{ "nome": "Elden Ring", "genero": "RPG", "plataforma": "PC", "ano": 2022, "nota": 9.5, "descricao": "...", "imagem_url": "..." }` |
 | PUT    | /api/jogos/:id     | Atualiza um jogo existente      | `{ "nome": "Elden Ring", "genero": "RPG", "plataforma": "PS5", "ano": 2022, "nota": 9.5, "descricao": "...", "imagem_url": "..." }` |
 | DELETE | /api/jogos/:id     | Exclui um jogo                  | -                                                                       |
+
+### Regras de validação (aplicadas no back-end)
+
+- Nome, gênero e plataforma devem ter pelo menos 2 caracteres
+- Ano deve estar entre 1970 e o ano atual + 1
+- Nota (quando informada) deve estar entre 0 e 10
 
 ### Exemplo de retorno (GET /api/jogos/1)
 ```json

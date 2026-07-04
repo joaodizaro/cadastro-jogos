@@ -47,12 +47,38 @@ app.get('/api/jogos/:id', (req, res) => {
   });
 });
 
+// Função de validação de dados do jogo (regra de negócio centralizada no servidor)
+function validarJogo(dados) {
+  const { nome, genero, plataforma, ano, nota } = dados;
+  const anoAtual = new Date().getFullYear();
+  const erros = [];
+
+  if (!nome || nome.trim().length < 2) {
+    erros.push('O nome deve ter pelo menos 2 caracteres');
+  }
+  if (!genero || genero.trim().length < 2) {
+    erros.push('O gênero deve ter pelo menos 2 caracteres');
+  }
+  if (!plataforma || plataforma.trim().length < 2) {
+    erros.push('A plataforma deve ter pelo menos 2 caracteres');
+  }
+  if (!ano || isNaN(ano) || ano < 1970 || ano > anoAtual + 1) {
+    erros.push(`O ano deve estar entre 1970 e ${anoAtual + 1}`);
+  }
+  if (nota !== null && nota !== undefined && nota !== '' && (isNaN(nota) || nota < 0 || nota > 10)) {
+    erros.push('A nota deve estar entre 0 e 10');
+  }
+
+  return erros;
+}
+
 // POST - Cadastrar novo jogo
 app.post('/api/jogos', (req, res) => {
   const { nome, genero, plataforma, ano, nota, descricao, imagem_url } = req.body;
 
-  if (!nome || !genero || !plataforma || !ano) {
-    return res.status(400).json({ erro: 'Campos obrigatórios: nome, genero, plataforma, ano' });
+  const erros = validarJogo(req.body);
+  if (erros.length > 0) {
+    return res.status(400).json({ erro: erros.join('; ') });
   }
 
   const sql = `INSERT INTO jogos (nome, genero, plataforma, ano, nota, descricao, imagem_url)
@@ -70,8 +96,9 @@ app.put('/api/jogos/:id', (req, res) => {
   const { id } = req.params;
   const { nome, genero, plataforma, ano, nota, descricao, imagem_url } = req.body;
 
-  if (!nome || !genero || !plataforma || !ano) {
-    return res.status(400).json({ erro: 'Campos obrigatórios: nome, genero, plataforma, ano' });
+  const erros = validarJogo(req.body);
+  if (erros.length > 0) {
+    return res.status(400).json({ erro: erros.join('; ') });
   }
 
   const sql = `UPDATE jogos SET nome = ?, genero = ?, plataforma = ?, ano = ?, nota = ?, descricao = ?, imagem_url = ? WHERE id = ?`;
