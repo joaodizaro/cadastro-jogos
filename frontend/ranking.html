@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cadastro de Jogos</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><rect width=%2224%22 height=%2224%22 rx=%225%22 fill=%22%2314b8a6%22/><rect x=%224%22 y=%228%22 width=%2216%22 height=%229%22 rx=%222.5%22 fill=%22white%22/></svg>">
-<link rel="stylesheet" href="style.css">
+<title>Ranking - Cadastro de Jogos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><rect width=%2224%22 height=%2224%22 rx=%225%22 fill=%22%2314b8a6%22/><rect x=%224%22 y=%228%22 width=%2216%22 height=%229%22 rx=%222.5%22 fill=%22white%22/></svg>">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -19,7 +19,7 @@
       <span>GameVault</span>
     </div>
     <nav>
-      <a href="index.html" class="nav-link active">
+      <a href="index.html" class="nav-link">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
         Lista de Jogos
       </a>
@@ -27,7 +27,7 @@
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         Novo Jogo
       </a>
-      <a href="ranking.html" class="nav-link">
+      <a href="ranking.html" class="nav-link active">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M17 6h2a2 2 0 0 1 0 4h-1M7 6H5a2 2 0 0 0 0 4h1"/></svg>
         Ranking
       </a>
@@ -44,23 +44,13 @@
 
   <div class="conteudo">
     <header>
-      <h1>Lista de Jogos</h1>
+      <h1>Ranking dos Jogos</h1>
     </header>
 
     <main>
-      <section class="filtros">
-        <input type="text" id="campoBusca" placeholder="Buscar por nome...">
-        <select id="filtroGenero">
-          <option value="">Todos os gêneros</option>
-        </select>
-        <a href="cadastro.html" class="btn btn-novo">+ Novo Jogo</a>
-      </section>
-
-      <section id="listaJogos" class="grid-jogos">
-        <!-- cards gerados via JS -->
-      </section>
-
-      <p id="mensagemVazia" style="display:none;">Nenhum jogo encontrado.</p>
+      <div id="rankingLista" class="ranking-lista">
+        <!-- gerado via JS -->
+      </div>
     </main>
   </div>
 </div>

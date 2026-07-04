@@ -14,6 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementById('statsGrid')) {
     iniciarPaginaDashboard();
   }
+  if (document.getElementById('rankingLista')) {
+    iniciarPaginaRanking();
+  }
 });
 
 /* ==================== PÁGINA: LISTA (index.html) ==================== */
@@ -33,6 +36,9 @@ async function carregarJogos() {
   const mensagemVazia = document.getElementById('mensagemVazia');
   const campoBusca = document.getElementById('campoBusca');
   const filtroGenero = document.getElementById('filtroGenero');
+
+  mostrarCarregando(listaJogos);
+  mensagemVazia.style.display = 'none';
 
   try {
     const params = new URLSearchParams();
@@ -162,6 +168,40 @@ async function carregarJogoParaEdicao(id) {
 async function salvarJogo(evento) {
   evento.preventDefault();
 
+  limparErros();
+
+  const nome = document.getElementById('nome').value.trim();
+  const genero = document.getElementById('genero').value.trim();
+  const plataforma = document.getElementById('plataforma').value.trim();
+  const ano = document.getElementById('ano').value;
+  const nota = document.getElementById('nota').value;
+
+  let temErro = false;
+  const anoAtual = new Date().getFullYear();
+
+  if (nome.length < 2) {
+    mostrarErro('nome', 'O nome deve ter pelo menos 2 caracteres');
+    temErro = true;
+  }
+  if (genero.length < 2) {
+    mostrarErro('genero', 'Informe um gênero válido');
+    temErro = true;
+  }
+  if (plataforma.length < 2) {
+    mostrarErro('plataforma', 'Informe uma plataforma válida');
+    temErro = true;
+  }
+  if (!ano || ano < 1970 || ano > anoAtual + 1) {
+    mostrarErro('ano', `O ano deve estar entre 1970 e ${anoAtual + 1}`);
+    temErro = true;
+  }
+  if (nota && (nota < 0 || nota > 10)) {
+    mostrarErro('nota', 'A nota deve estar entre 0 e 10');
+    temErro = true;
+  }
+
+  if (temErro) return;
+
   const id = document.getElementById('jogoId').value;
   const dados = {
     nome: document.getElementById('nome').value,
@@ -212,6 +252,8 @@ async function iniciarPaginaDetalhes() {
     container.innerHTML = '<p>Nenhum jogo especificado.</p>';
     return;
   }
+
+  mostrarCarregando(container);
 
   try {
     const resposta = await fetch(`${API_URL}/${id}`);
@@ -322,4 +364,74 @@ function renderizarGeneros(jogos) {
         <div class="genero-qtd">${qtd}</div>
       </div>
     `).join('');
+}
+/* ==================== LOADING STATE (usado em todas as páginas) ==================== */
+
+function mostrarCarregando(container) {
+  container.innerHTML = `
+    <div class="loading-container">
+      <div class="spinner"></div>
+      <p>Carregando...</p>
+    </div>
+  `;
+}
+/* ==================== VALIDAÇÃO DE FORMULÁRIO ==================== */
+
+function mostrarErro(campoId, mensagem) {
+  const campo = document.getElementById(campoId);
+  campo.classList.add('campo-erro');
+
+  const erroExistente = campo.parentElement.querySelector('.mensagem-erro');
+  if (erroExistente) erroExistente.remove();
+
+  const erroEl = document.createElement('span');
+  erroEl.className = 'mensagem-erro';
+  erroEl.textContent = mensagem;
+  campo.insertAdjacentElement('afterend', erroEl);
+}
+
+function limparErros() {
+  document.querySelectorAll('.campo-erro').forEach(el => el.classList.remove('campo-erro'));
+  document.querySelectorAll('.mensagem-erro').forEach(el => el.remove());
+}
+/* ==================== PÁGINA: RANKING (ranking.html) ==================== */
+
+async function iniciarPaginaRanking() {
+  const container = document.getElementById('rankingLista');
+  mostrarCarregando(container);
+
+  try {
+    const resposta = await fetch(API_URL);
+    const jogos = await resposta.json();
+
+    const ordenados = jogos
+      .filter(j => j.nota != null)
+      .sort((a, b) => b.nota - a.nota);
+
+    if (ordenados.length === 0) {
+      container.innerHTML = '<p id="mensagemVazia">Nenhum jogo com nota cadastrada ainda.</p>';
+      return;
+    }
+
+    container.innerHTML = ordenados.map((jogo, index) => {
+      const imagem = jogo.imagem_url || 'https://via.placeholder.com/100x100?text=?';
+      return `
+        <a href="detalhes.html?id=${jogo.id}" class="ranking-item">
+          <div class="ranking-posicao">${index + 1}º</div>
+          <img src="${imagem}" alt="${jogo.nome}" class="ranking-capa" onerror="this.src='https://via.placeholder.com/100x100?text=?'">
+          <div class="ranking-info">
+            <h3>${jogo.nome}</h3>
+            <div class="card-tags">
+              <span class="tag">${jogo.genero}</span>
+              <span class="tag">${jogo.plataforma}</span>
+            </div>
+          </div>
+          <div class="ranking-nota">⭐ ${jogo.nota}</div>
+        </a>
+      `;
+    }).join('');
+  } catch (erro) {
+    container.innerHTML = '<p>Erro ao carregar ranking.</p>';
+    console.error(erro);
+  }
 }

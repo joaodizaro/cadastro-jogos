@@ -562,3 +562,149 @@ main {
   border-top: 1px solid var(--borda);
   padding-top: 16px;
 }
+/* Loading state */
+.loading-container {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  color: var(--texto-secundario);
+  gap: 14px;
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--borda);
+  border-top-color: var(--destaque);
+  border-radius: 50%;
+  animation: girar 0.7s linear infinite;
+}
+
+@keyframes girar {
+  to { transform: rotate(360deg); }
+}
+/* Validação de formulário */
+.campo-erro {
+  border-color: var(--perigo) !important;
+}
+
+.mensagem-erro {
+  display: block;
+  color: var(--perigo);
+  font-size: 12px;
+  margin-top: 5px;
+}
+/* Animações sutis */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.conteudo {
+  animation: fadeInUp 0.35s ease;
+}
+
+.card-jogo {
+  animation: fadeInUp 0.3s ease backwards;
+}
+
+.card-jogo:nth-child(1) { animation-delay: 0.03s; }
+.card-jogo:nth-child(2) { animation-delay: 0.06s; }
+.card-jogo:nth-child(3) { animation-delay: 0.09s; }
+.card-jogo:nth-child(4) { animation-delay: 0.12s; }
+.card-jogo:nth-child(5) { animation-delay: 0.15s; }
+.card-jogo:nth-child(6) { animation-delay: 0.18s; }
+.card-jogo:nth-child(7) { animation-delay: 0.21s; }
+.card-jogo:nth-child(8) { animation-delay: 0.24s; }
+
+.stat-card {
+  animation: fadeInUp 0.3s ease backwards;
+}
+
+.stat-card:nth-child(1) { animation-delay: 0.03s; }
+.stat-card:nth-child(2) { animation-delay: 0.06s; }
+.stat-card:nth-child(3) { animation-delay: 0.09s; }
+.stat-card:nth-child(4) { animation-delay: 0.12s; }
+/* Página de Ranking */
+.ranking-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 700px;
+}
+
+.ranking-item {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: var(--bg-card);
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  padding: 14px 18px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.ranking-item:hover {
+  border-color: var(--destaque);
+  transform: translateX(4px);
+}
+
+.ranking-posicao {
+  font-size: 20px;
+  font-weight: 800;
+  width: 32px;
+  text-align: center;
+  color: var(--texto-secundario);
+  flex-shrink: 0;
+}
+
+.ranking-item:nth-child(1) .ranking-posicao { color: #fbbf24; }
+.ranking-item:nth-child(2) .ranking-posicao { color: #d1d5db; }
+.ranking-item:nth-child(3) .ranking-posicao { color: #d97706; }
+
+.ranking-capa {
+  width: 52px;
+  height: 52px;
+  border-radius: 8px;
+  object-fit: cover;
+  background-color: var(--bg-secundario);
+  flex-shrink: 0;
+}
+
+.ranking-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.ranking-info h3 {
+  font-size: 15px;
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ranking-info .card-tags {
+  margin-bottom: 0;
+}
+
+.ranking-nota {
+  font-weight: 800;
+  font-size: 17px;
+  color: #fbbf24;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
