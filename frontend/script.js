@@ -2,6 +2,8 @@ const API_URL = 'http://localhost:3000/api/jogos';
 
 // Detecta em qual página estamos e executa o código correspondente
 document.addEventListener('DOMContentLoaded', () => {
+  iniciarMenuMobile();
+
   if (document.getElementById('listaJogos')) {
     iniciarPaginaLista();
   }
@@ -434,4 +436,23 @@ async function iniciarPaginaRanking() {
     container.innerHTML = '<p>Erro ao carregar ranking.</p>';
     console.error(erro);
   }
+}
+/* ==================== MENU MOBILE (hambúrguer) ==================== */
+
+function iniciarMenuMobile() {
+  const btnMenu = document.getElementById('btnMenuMobile');
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.getElementById('overlayMenu');
+
+  if (!btnMenu || !sidebar || !overlay) return;
+
+  btnMenu.addEventListener('click', () => {
+    sidebar.classList.toggle('aberta');
+    overlay.classList.toggle('ativo');
+  });
+
+  overlay.addEventListener('click', () => {
+    sidebar.classList.remove('aberta');
+    overlay.classList.remove('ativo');
+  });
 }
