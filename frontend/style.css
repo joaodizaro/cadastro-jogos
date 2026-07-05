@@ -756,3 +756,18 @@ main {
   align-items: center;
   gap: 4px;
 }
+.form-container select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  background-color: var(--bg-secundario);
+  color: var(--texto-principal);
+}
+
+.form-container select:focus {
+  outline: none;
+  border-color: var(--destaque);
+}

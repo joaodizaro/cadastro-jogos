@@ -23,14 +23,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /* ==================== PÁGINA: LISTA (index.html) ==================== */
 
-function iniciarPaginaLista() {
+async function iniciarPaginaLista() {
   const campoBusca = document.getElementById('campoBusca');
   const filtroGenero = document.getElementById('filtroGenero');
 
+  await carregarCategoriasNoFiltro(filtroGenero);
   carregarJogos();
 
   campoBusca.addEventListener('input', debounce(carregarJogos, 300));
   filtroGenero.addEventListener('change', carregarJogos);
+}
+
+async function carregarCategoriasNoFiltro(selectElemento) {
+  try {
+    const resposta = await fetch('http://localhost:3000/api/categorias');
+    const categorias = await resposta.json();
+
+    categorias.forEach(categoria => {
+      const option = document.createElement('option');
+      option.value = categoria.id;
+      option.textContent = categoria.nome;
+      selectElemento.appendChild(option);
+    });
+  } catch (erro) {
+    console.error('Erro ao carregar categorias:', erro);
+  }
 }
 
 async function carregarJogos() {
@@ -45,12 +62,11 @@ async function carregarJogos() {
   try {
     const params = new URLSearchParams();
     if (campoBusca.value) params.append('busca', campoBusca.value);
-    if (filtroGenero.value) params.append('genero', filtroGenero.value);
+    if (filtroGenero.value) params.append('categoria_id', filtroGenero.value);
 
     const resposta = await fetch(`${API_URL}?${params.toString()}`);
     const jogos = await resposta.json();
 
-    preencherFiltroGeneros(jogos, filtroGenero);
     renderizarCards(jogos, listaJogos, mensagemVazia);
   } catch (erro) {
     alert('Erro ao carregar jogos. Verifique se o back-end está rodando.');
@@ -93,7 +109,7 @@ function renderizarCards(jogos, container, mensagemVazia) {
         <div class="card-corpo">
           <h3>${jogo.nome}</h3>
           <div class="card-tags">
-            <span class="tag">${jogo.genero}</span>
+            <span class="tag">${jogo.categoria_nome}</span>
             <span class="tag">${jogo.plataforma}</span>
             <span class="tag">${jogo.ano}</span>
           </div>
@@ -134,10 +150,12 @@ function debounce(fn, delay) {
 
 /* ==================== PÁGINA: CADASTRO/EDIÇÃO (cadastro.html) ==================== */
 
-function iniciarPaginaCadastro() {
+async function iniciarPaginaCadastro() {
   const formJogo = document.getElementById('formJogo');
   const params = new URLSearchParams(window.location.search);
   const id = params.get('id');
+
+  await carregarCategorias();
 
   if (id) {
     document.getElementById('tituloForm').textContent = 'Editar Jogo';
@@ -148,6 +166,23 @@ function iniciarPaginaCadastro() {
   formJogo.addEventListener('submit', salvarJogo);
 }
 
+async function carregarCategorias() {
+  const select = document.getElementById('categoria_id');
+  try {
+    const resposta = await fetch('http://localhost:3000/api/categorias');
+    const categorias = await resposta.json();
+
+    categorias.forEach(categoria => {
+      const option = document.createElement('option');
+      option.value = categoria.id;
+      option.textContent = categoria.nome;
+      select.appendChild(option);
+    });
+  } catch (erro) {
+    console.error('Erro ao carregar categorias:', erro);
+  }
+}
+
 async function carregarJogoParaEdicao(id) {
   try {
     const resposta = await fetch(`${API_URL}/${id}`);
@@ -155,7 +190,7 @@ async function carregarJogoParaEdicao(id) {
     const jogo = await resposta.json();
 
     document.getElementById('nome').value = jogo.nome;
-    document.getElementById('genero').value = jogo.genero;
+    document.getElementById('categoria_id').value = jogo.categoria_id;
     document.getElementById('plataforma').value = jogo.plataforma;
     document.getElementById('ano').value = jogo.ano;
     document.getElementById('nota').value = jogo.nota ?? '';
@@ -173,7 +208,7 @@ async function salvarJogo(evento) {
   limparErros();
 
   const nome = document.getElementById('nome').value.trim();
-  const genero = document.getElementById('genero').value.trim();
+  const categoria_id = document.getElementById('categoria_id').value;
   const plataforma = document.getElementById('plataforma').value.trim();
   const ano = document.getElementById('ano').value;
   const nota = document.getElementById('nota').value;
@@ -185,8 +220,8 @@ async function salvarJogo(evento) {
     mostrarErro('nome', 'O nome deve ter pelo menos 2 caracteres');
     temErro = true;
   }
-  if (genero.length < 2) {
-    mostrarErro('genero', 'Informe um gênero válido');
+  if (!categoria_id) {
+    mostrarErro('categoria_id', 'Selecione uma categoria');
     temErro = true;
   }
   if (plataforma.length < 2) {
@@ -206,11 +241,11 @@ async function salvarJogo(evento) {
 
   const id = document.getElementById('jogoId').value;
   const dados = {
-    nome: document.getElementById('nome').value,
-    genero: document.getElementById('genero').value,
-    plataforma: document.getElementById('plataforma').value,
-    ano: Number(document.getElementById('ano').value),
-    nota: document.getElementById('nota').value ? Number(document.getElementById('nota').value) : null,
+    nome,
+    categoria_id: Number(categoria_id),
+    plataforma,
+    ano: Number(ano),
+    nota: nota ? Number(nota) : null,
     descricao: document.getElementById('descricao').value || null,
     imagem_url: document.getElementById('imagem_url').value || null
   };
@@ -269,7 +304,7 @@ async function iniciarPaginaDetalhes() {
       <div class="detalhes-info">
         <h2>${jogo.nome}</h2>
         <div class="card-tags">
-          <span class="tag">${jogo.genero}</span>
+          <span class="tag">${jogo.categoria_nome}</span>
           <span class="tag">${jogo.plataforma}</span>
           <span class="tag">${jogo.ano}</span>
         </div>
@@ -323,7 +358,7 @@ function renderizarEstatisticas(jogos) {
     if (!melhor) return atual;
     return (atual.nota ?? 0) > (melhor.nota ?? 0) ? atual : melhor;
   }, null);
-  const totalGeneros = new Set(jogos.map(j => j.genero)).size;
+  const totalGeneros = new Set(jogos.map(j => j.categoria_nome)).size;
 
   statsGrid.innerHTML = `
     <div class="stat-card">
@@ -350,7 +385,7 @@ function renderizarGeneros(jogos) {
   const contagem = {};
 
   jogos.forEach(jogo => {
-    contagem[jogo.genero] = (contagem[jogo.genero] || 0) + 1;
+    contagem[jogo.categoria_nome] = (contagem[jogo.categoria_nome] || 0) + 1;
   });
 
   const maxQtd = Math.max(...Object.values(contagem), 1);
@@ -424,7 +459,7 @@ async function iniciarPaginaRanking() {
           <div class="ranking-info">
             <h3>${jogo.nome}</h3>
             <div class="card-tags">
-              <span class="tag">${jogo.genero}</span>
+              <span class="tag">${jogo.categoria_nome}</span>
               <span class="tag">${jogo.plataforma}</span>
             </div>
           </div>

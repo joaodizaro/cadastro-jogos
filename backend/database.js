@@ -9,18 +9,29 @@ const db = new sqlite3.Database(path.join(__dirname, 'jogos.db'), (err) => {
   }
 });
 
-// Cria a tabela caso não exista
-db.run(`
-  CREATE TABLE IF NOT EXISTS jogos (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nome TEXT NOT NULL,
-    genero TEXT NOT NULL,
-    plataforma TEXT NOT NULL,
-    ano INTEGER NOT NULL,
-    nota REAL,
-    descricao TEXT,
-    imagem_url TEXT
-  )
-`);
+db.serialize(() => {
+  db.run(`PRAGMA foreign_keys = ON`);
+
+  db.run(`
+    CREATE TABLE IF NOT EXISTS categorias (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      nome TEXT NOT NULL UNIQUE
+    )
+  `);
+
+  db.run(`
+    CREATE TABLE IF NOT EXISTS jogos (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      nome TEXT NOT NULL,
+      categoria_id INTEGER NOT NULL,
+      plataforma TEXT NOT NULL,
+      ano INTEGER NOT NULL,
+      nota REAL,
+      descricao TEXT,
+      imagem_url TEXT,
+      FOREIGN KEY (categoria_id) REFERENCES categorias(id)
+    )
+  `);
+});
 
 module.exports = db;

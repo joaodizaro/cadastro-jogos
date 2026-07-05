@@ -4,7 +4,6 @@ const db = require('./database');
 
 const sql = fs.readFileSync(path.join(__dirname, 'database.sql'), 'utf8');
 
-// Remove comentários e divide em comandos separados por ;
 const comandos = sql
   .split(';')
   .map(c => c.trim())
