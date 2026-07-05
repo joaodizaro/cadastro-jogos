@@ -119,5 +119,12 @@ E acesse `http://127.0.0.1:5500` no navegador.
 }
 ```
 
+## Testes da API
+
+Os testes manuais realizados na API (todos os métodos HTTP, validações e
+tratamento de erros) estão documentados no arquivo [`testes-api.md`](./testes-api.md).
+
 ## Autor
-Trabalho individual desenvolvido para fins acadêmicos.
+
+João Victor Neves de Souza Mateus Dizaro
+Trabalho individual desenvolvido para a disciplina de Programação II — Sistemas de Informação, UEMG Unidade Passos (2026/01).
