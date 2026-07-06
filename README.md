@@ -45,10 +45,16 @@ e consistentes, evitando duplicidade de texto livre (ex: "RPG" vs "rpg").
 
 ## Como executar o projeto
 
-### 1. Pré-requisitos
+### 1. Clonar o repositório
+```bash
+git clone https://github.com/joaodizaro/cadastro-jogos.git
+cd cadastro-jogos
+```
+
+### 2. Pré-requisitos
 - Node.js instalado (versão 18 ou superior recomendada)
 
-### 2. Configuração do banco de dados
+### 3. Configuração do banco de dados
 O banco de dados SQLite é criado automaticamente ao iniciar o servidor
 (arquivo `backend/jogos.db`), incluindo as tabelas `categorias` e `jogos`.
 O script `backend/database.sql` documenta a estrutura e os dados iniciais.
@@ -58,7 +64,7 @@ Para popular o banco de dados com os dados de exemplo, rode (dentro da pasta `ba
 node seed.js
 ```
 
-### 3. Executando o Back-end
+### 4. Executando o Back-end
 ```bash
 cd backend
 npm install
@@ -66,7 +72,7 @@ npm start
 ```
 O servidor estará disponível em: `http://localhost:3000`
 
-### 4. Executando o Front-end
+### 5. Executando o Front-end
 Abra o arquivo `frontend/index.html` diretamente no navegador, ou use um
 servidor local (recomendado), por exemplo:
 ```bash
