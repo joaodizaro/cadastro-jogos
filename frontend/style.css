@@ -495,7 +495,7 @@ main {
   }
 
   main {
-    padding: 60px 15px 20px;
+    padding: 60px 16px 20px;
   }
 
   header {
@@ -770,4 +770,140 @@ main {
 .form-container select:focus {
   outline: none;
   border-color: var(--destaque);
+}
+/* ==================== REFINAMENTO FINAL ==================== */
+
+/* Scrollbar customizada */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-principal);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--borda);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--destaque);
+}
+
+/* Estados de foco mais refinados (acessibilidade + polish) */
+.btn:focus-visible,
+.nav-link:focus-visible {
+  outline: 2px solid var(--destaque);
+  outline-offset: 2px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.15);
+}
+
+/* Melhor espaçamento entre seções do conteúdo principal */
+main {
+  padding: 28px 32px;
+}
+
+main > section:not(:last-child) {
+  margin-bottom: 4px;
+}
+
+/* Espaçamento mais respirado no formulário */
+.form-container {
+  padding: 28px 30px;
+}
+
+.form-container label {
+  margin-top: 16px;
+}
+
+.form-container label:first-of-type {
+  margin-top: 0;
+}
+
+/* Cards de estatística com hover mais vivo */
+.stat-card {
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Página Sobre com mais destaque visual */
+.sobre-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.sobre-container::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, rgba(20, 184, 166, 0.12), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.sobre-container h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sobre-container h2::before {
+  content: '';
+  width: 4px;
+  height: 24px;
+  background: var(--destaque);
+  border-radius: 2px;
+}
+
+.sobre-container h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Dashboard: destaque extra no primeiro card (Total de jogos) */
+.stat-card:first-child {
+  background: linear-gradient(135deg, var(--bg-card), rgba(20, 184, 166, 0.08));
+}
+
+/* Melhor respiro entre header e conteúdo */
+header {
+  margin-bottom: 4px;
+}
+
+/* Links do menu com transição mais suave no ícone */
+.nav-link svg {
+  transition: transform 0.15s;
+  flex-shrink: 0;
+}
+
+.nav-link:hover svg {
+  transform: scale(1.1);
+}
+
+/* Botões com leve efeito de "press" ao clicar */
+.btn:active {
+  transform: scale(0.97);
+}
+
+/* Tags com hover sutil dentro dos cards */
+.tag {
+  transition: border-color 0.15s;
+}
+
+.card-jogo:hover .tag {
+  border-color: rgba(20, 184, 166, 0.3);
 }
